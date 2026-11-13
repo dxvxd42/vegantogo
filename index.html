@@ -132,6 +132,15 @@ ul.privacy b{color:var(--text)}
 
 /* ---------- Verlauf ---------- */
 .hist{list-style:none;margin:0;padding:0}
+.search{display:flex;align-items:center;gap:8px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:0 12px;margin-bottom:10px}
+.search svg{width:20px;height:20px;color:var(--muted)}
+.search input{flex:1;border:0;background:none;padding:13px 0;font:inherit;color:var(--text);outline:none;min-width:0}
+.search:focus-within{border-color:var(--accent)}
+.fchips{display:flex;gap:8px;overflow-x:auto;margin:0 -16px 14px;padding:0 16px;scrollbar-width:none}
+.fchips::-webkit-scrollbar{display:none}
+.fchips button{flex:none;padding:8px 14px;border-radius:99px;background:var(--card);border:1px solid var(--line);font-size:14px;font-weight:600;color:var(--text)}
+.fchips button[aria-pressed=true]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+mark.q{background:color-mix(in srgb,var(--accent) 30%,transparent);color:inherit;padding:0;font-weight:inherit}
 .hist li{display:flex;align-items:center;gap:12px;padding:12px 14px;background:var(--card);border:1px solid var(--line);border-radius:16px;margin-bottom:8px}
 .hist .nm{flex:1;min-width:0}
 .hist .nm b{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -236,6 +245,12 @@ input.code{font-size:26px;letter-spacing:.08em;text-align:center;font-variant-nu
     <div class="page">
       <h1>Verlauf</h1>
       <p class="sub" id="histSub">Nur auf diesem Gerät gespeichert.</p>
+      <div id="histTools" hidden>
+        <label class="search"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input type="search" id="histQ" placeholder="Produkt, Marke, Zutat oder Nummer" autocomplete="off" autocorrect="off" spellcheck="false" enterkeyhint="search"></label>
+        <div class="fchips" id="histF" role="group" aria-label="Filter">
+          <button data-f="" aria-pressed="true">Alle</button><button data-f="vegan" aria-pressed="false">Vegan</button><button data-f="veg" aria-pressed="false">Vegetarisch</button><button data-f="meat" aria-pressed="false">Nicht vegetarisch</button><button data-f="unk" aria-pressed="false">Unklar</button>
+        </div>
+      </div>
       <ul class="hist" id="histList"></ul>
       <button class="btn danger mt" id="bHistClear" hidden>Verlauf löschen</button>
     </div>
@@ -1007,18 +1022,53 @@ function addHistory(code, p){
   list.unshift({ code: code, name: p.product_name || 'Unbekanntes Produkt', brand: p.brands || '', v: ev.vegan.status, g: ev.veg.status, t: Date.now(), p: p });
   store.set('history', list.slice(0, 200));
 }
+var histFilter = '';
+function fold(x){ return String(x || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/ß/g, 'ss'); }
+function hlQ(text, q){
+  // Treffer im Namen hervorheben (Positionen über die „gefaltete“ Schreibweise)
+  if (!q) return esc(text);
+  var f = fold(text), i = f.indexOf(q);
+  if (i < 0 || f.length !== text.length) return esc(text);
+  return esc(text.slice(0, i)) + '<mark class="q">' + esc(text.slice(i, i + q.length)) + '</mark>' + esc(text.slice(i + q.length));
+}
+function matchFilter(h){
+  var v = h.v, g = h.g;
+  if (histFilter === 'vegan') return v === 'yes' || v === 'likely';
+  if (histFilter === 'veg') return g === 'yes' || g === 'likely';
+  if (histFilter === 'meat') return g === 'no';
+  if (histFilter === 'unk') return g !== 'no' && (v === 'maybe' || v === 'unknown');
+  return true;
+}
 function renderHistory(){
   var list = getHistory(), ul = $('histList');
   $('histSub').textContent = S.history ? 'Nur auf diesem Gerät gespeichert.' : 'Verlauf ist ausgeschaltet (siehe Einstellungen).';
   $('bHistClear').hidden = !list.length;
+  $('histTools').hidden = !list.length;
   if (!list.length) { ul.innerHTML = '<li class="empty" style="display:block;border:0;background:none"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><br>Noch keine Scans.</li>'; return; }
-  ul.innerHTML = list.map(function(h, i){
+  var q = fold($('histQ').value.trim()), words = q.split(/\s+/).filter(Boolean);
+  var rows = [];
+  list.forEach(function(h, i){
+    if (!matchFilter(h)) return;
+    if (words.length) {
+      var p = h.p || {};
+      var hay = fold([h.name, h.brand, h.code, p.ingredients_text_de, p.ingredients_text, p.ingredients_text_en].join(' '));
+      if (!words.every(function(w){ return hay.indexOf(w) !== -1; })) return;
+    }
     var head = headline({ vegan: { status: h.v }, veg: { status: h.g } });
     var d = new Date(h.t);
-    return '<li data-i="' + i + '" role="button"><span class="dot s-' + head[0] + '"></span><span class="nm"><b>' + esc(h.name) + '</b><span>' + esc(head[1]) + ' · ' + esc(h.brand ? h.brand + ' · ' : '') + d.toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit' }) + '</span></span>' +
-      '<svg viewBox="0 0 24 24" style="color:var(--muted);width:18px;height:18px"><path d="m9 18 6-6-6-6"/></svg></li>';
-  }).join('');
+    rows.push('<li data-i="' + i + '" role="button"><span class="dot s-' + head[0] + '"></span><span class="nm"><b>' + hlQ(h.name, words[0]) + '</b><span>' + esc(head[1]) + ' · ' + (h.brand ? hlQ(h.brand, words[0]) + ' · ' : '') + d.toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit' }) + '</span></span>' +
+      '<svg viewBox="0 0 24 24" style="color:var(--muted);width:18px;height:18px"><path d="m9 18 6-6-6-6"/></svg></li>');
+  });
+  ul.innerHTML = rows.length ? rows.join('') : '<li class="empty" style="display:block;border:0;background:none">Keine Treffer.</li>';
 }
+$('histQ').addEventListener('input', renderHistory);
+$('histQ').addEventListener('keydown', function(e){ if (e.key === 'Enter') this.blur(); });
+$('histF').addEventListener('click', function(e){
+  var b = e.target.closest('button[data-f]'); if (!b) return;
+  histFilter = b.dataset.f;
+  this.querySelectorAll('button').forEach(function(x){ x.setAttribute('aria-pressed', String(x === b)); });
+  renderHistory();
+});
 $('histList').addEventListener('click', function(e){
   var li = e.target.closest('li[data-i]'); if (!li) return;
   var h = getHistory()[+li.dataset.i]; if (h && h.p) renderProduct(h.p, h.code, 'cache');
