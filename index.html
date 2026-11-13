@@ -114,6 +114,17 @@ textarea:focus,input:focus{border-color:var(--accent)}
 .sw i::after{content:"";position:absolute;top:2px;left:2px;width:27px;height:27px;border-radius:50%;background:#fff;box-shadow:0 2px 4px rgba(0,0,0,.25);transition:.2s}
 .sw input:checked+i{background:var(--accent)}
 .sw input:checked+i::after{transform:translateX(20px)}
+details.disc{padding:0}
+details.disc summary{list-style:none;display:flex;align-items:center;gap:12px;padding:14px 16px;cursor:pointer}
+details.disc summary::-webkit-details-marker{display:none}
+details.disc .dic{width:34px;height:34px;border-radius:10px;background:var(--accent);color:var(--accent-ink);display:flex;align-items:center;justify-content:center;flex:none}
+details.disc .dic svg{width:20px;height:20px}
+details.disc .t{flex:1}
+details.disc .t b{display:block;font-weight:600}
+details.disc .t span{display:block;font-size:13.5px;color:var(--muted)}
+details.disc .chev{width:20px;height:20px;color:var(--muted);transition:transform .2s}
+details.disc[open] .chev{transform:rotate(90deg)}
+details.disc ul.privacy{padding:0 16px 10px;border-top:1px solid var(--line)}
 ul.privacy{margin:6px 0 0;padding:0;list-style:none}
 ul.privacy li{display:flex;gap:10px;padding:8px 0;font-size:15px;color:var(--muted)}
 ul.privacy li svg{color:var(--accent);width:20px;height:20px;margin-top:1px}
@@ -231,12 +242,19 @@ input.code{font-size:26px;letter-spacing:.08em;text-align:center;font-variant-nu
   </section>
 
   <!-- ================= DATENSCHUTZ / EINSTELLUNGEN ================= -->
-  <section id="v-settings" class="view" aria-label="Datenschutz und Einstellungen">
+  <section id="v-settings" class="view" aria-label="Einstellungen">
     <div class="page">
-      <h1>Datenschutz</h1>
-      <p class="sub">Kein Konto, keine Werbung, kein Tracking.</p>
+      <h1>Einstellungen</h1>
       <div class="card">
-        <h2>So gehen wir mit deinen Daten um</h2>
+        <label class="set"><span class="t"><b>Offline-Modus</b><span>Nie etwas senden. Scans werden nur mit dem Verlauf abgeglichen, sonst Zutaten selbst prüfen.</span></span><span class="sw"><input type="checkbox" data-set="offline"><i></i></span></label>
+        <label class="set"><span class="t"><b>Verlauf speichern</b><span>Gescannte Produkte lokal merken (max. 200).</span></span><span class="sw"><input type="checkbox" data-set="history"><i></i></span></label>
+        <label class="set"><span class="t"><b>Produktfotos laden</b><span>Lädt das Bild von images.openfoodfacts.org (zusätzliche Verbindung).</span></span><span class="sw"><input type="checkbox" data-set="images"><i></i></span></label>
+        <label class="set"><span class="t"><b>Kamera sofort starten</b><span>Beim Öffnen der App direkt scannen.</span></span><span class="sw"><input type="checkbox" data-set="autostart"><i></i></span></label>
+        <label class="set"><span class="t"><b>Ton bei Treffer</b><span>Kurzer Piepton.</span></span><span class="sw"><input type="checkbox" data-set="sound"><i></i></span></label>
+        <label class="set"><span class="t"><b>Vibration bei Treffer</b><span>Haptisches Feedback (ab iOS 18).</span></span><span class="sw"><input type="checkbox" data-set="haptic"><i></i></span></label>
+      </div>
+      <details class="card disc">
+        <summary><span class="dic"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span><span class="t"><b>Datenschutz</b><span>Kein Konto, keine Werbung, kein Tracking</span></span><svg class="chev" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></svg></summary>
         <ul class="privacy">
           <li><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><span><b>Kamera:</b> Das Bild wird nur im Arbeitsspeicher nach Barcodes durchsucht – nichts wird gespeichert oder gesendet. Die Kamera geht nach 90 Sekunden ohne Treffer und beim Verlassen der App automatisch aus.</span></li>
           <li><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><span><b>Produktabfrage:</b> Nur die Barcode-Nummer geht an die gemeinnützige Datenbank <b>Open Food Facts</b> – ohne Cookies, ohne Referrer, ohne Kennung. Wie bei jeder Internetverbindung sieht der Server dabei deine IP-Adresse.</span></li>
@@ -245,16 +263,7 @@ input.code{font-size:26px;letter-spacing:.08em;text-align:center;font-variant-nu
           <li><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><span><b>Keine Fremd-Inhalte:</b> Keine Schriftarten, Skripte oder Statistik-Dienste von Dritten. Eine Sicherheitsrichtlinie (CSP) erlaubt technisch nur Verbindungen zur App-Adresse selbst und zu Open Food Facts.</span></li>
           <li><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><span><b>Verlauf:</b> Bleibt nur auf diesem Gerät und lässt sich abschalten oder löschen. Bereits gescannte Produkte werden aus dem Verlauf angezeigt, ohne erneut im Internet zu fragen.</span></li>
         </ul>
-      </div>
-      <div class="card">
-        <h2>Einstellungen</h2>
-        <label class="set"><span class="t"><b>Offline-Modus</b><span>Nie etwas senden. Scans werden nur mit dem Verlauf abgeglichen, sonst Zutaten selbst prüfen.</span></span><span class="sw"><input type="checkbox" data-set="offline"><i></i></span></label>
-        <label class="set"><span class="t"><b>Verlauf speichern</b><span>Gescannte Produkte lokal merken (max. 200).</span></span><span class="sw"><input type="checkbox" data-set="history"><i></i></span></label>
-        <label class="set"><span class="t"><b>Produktfotos laden</b><span>Lädt das Bild von images.openfoodfacts.org (zusätzliche Verbindung).</span></span><span class="sw"><input type="checkbox" data-set="images"><i></i></span></label>
-        <label class="set"><span class="t"><b>Kamera sofort starten</b><span>Beim Öffnen der App direkt scannen.</span></span><span class="sw"><input type="checkbox" data-set="autostart"><i></i></span></label>
-        <label class="set"><span class="t"><b>Ton bei Treffer</b><span>Kurzer Piepton.</span></span><span class="sw"><input type="checkbox" data-set="sound"><i></i></span></label>
-        <label class="set"><span class="t"><b>Vibration bei Treffer</b><span>Haptisches Feedback (ab iOS 18).</span></span><span class="sw"><input type="checkbox" data-set="haptic"><i></i></span></label>
-      </div>
+      </details>
       <div class="card">
         <h2>Wichtiger Hinweis</h2>
         <p>Die Daten stammen aus einer freien Community-Datenbank und können unvollständig oder veraltet sein. Bei Allergien oder strenger Ernährung im Zweifel immer die Zutatenliste auf der Packung prüfen.</p>
@@ -269,7 +278,7 @@ input.code{font-size:26px;letter-spacing:.08em;text-align:center;font-variant-nu
   <button role="tab" data-view="v-scan" aria-selected="true"><svg viewBox="0 0 24 24"><path d="M3 7V5a2 2 0 0 1 2-2h2M17 3h2a2 2 0 0 1 2 2v2M21 17v2a2 2 0 0 1-2 2h-2M7 21H5a2 2 0 0 1-2-2v-2M7 8v8M11 8v8M14 8v8M17 8v8"/></svg>Scannen</button>
   <button role="tab" data-view="v-check" aria-selected="false"><svg viewBox="0 0 24 24"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg>Zutaten</button>
   <button role="tab" data-view="v-history" aria-selected="false"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Verlauf</button>
-  <button role="tab" data-view="v-settings" aria-selected="false"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Datenschutz</button>
+  <button role="tab" data-view="v-settings" aria-selected="false"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>Einstellungen</button>
 </nav>
 
 <div class="backdrop" id="backdrop"></div>
@@ -1000,7 +1009,7 @@ function addHistory(code, p){
 }
 function renderHistory(){
   var list = getHistory(), ul = $('histList');
-  $('histSub').textContent = S.history ? 'Nur auf diesem Gerät gespeichert.' : 'Verlauf ist ausgeschaltet (Datenschutz-Einstellungen).';
+  $('histSub').textContent = S.history ? 'Nur auf diesem Gerät gespeichert.' : 'Verlauf ist ausgeschaltet (siehe Einstellungen).';
   $('bHistClear').hidden = !list.length;
   if (!list.length) { ul.innerHTML = '<li class="empty" style="display:block;border:0;background:none"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><br>Noch keine Scans.</li>'; return; }
   ul.innerHTML = list.map(function(h, i){
