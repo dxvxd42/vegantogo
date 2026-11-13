@@ -66,9 +66,11 @@ nav.tabs svg{width:26px;height:26px}
 .laser{position:absolute;left:8%;right:8%;top:50%;height:2px;background:#ff4d4d;box-shadow:0 0 12px #ff4d4d;border-radius:2px;opacity:0;animation:laser 1.6s ease-in-out infinite}
 .scanning .laser{opacity:.9}
 @keyframes laser{0%,100%{transform:translateY(-38px)}50%{transform:translateY(38px)}}
-.cam-top{position:absolute;left:0;right:0;top:0;padding:calc(var(--safe-t) + 10px) 16px 0;display:flex;align-items:center;justify-content:space-between;color:#fff}
-.brand{display:flex;align-items:center;gap:8px;font-weight:800;font-size:20px;letter-spacing:-.01em;text-shadow:0 1px 6px rgba(0,0,0,.5)}
-.brand img{width:30px;height:30px;border-radius:8px}
+.cam-top{position:absolute;z-index:3;pointer-events:none;left:0;right:0;top:0;padding:calc(var(--safe-t) + 10px) 16px 0;display:flex;align-items:center;justify-content:space-between;color:#fff}
+.wordmark{display:flex;align-items:flex-start;font-family:ui-rounded,"SF Pro Rounded",-apple-system,BlinkMacSystemFont,system-ui,sans-serif;font-weight:800;font-size:30px;line-height:1;letter-spacing:-.04em;filter:drop-shadow(0 2px 10px rgba(0,0,0,.55));user-select:none;-webkit-user-select:none}
+.wordmark .a{color:#fff}
+.wordmark .b{background:linear-gradient(120deg,#c9f7b0 0%,#5fe07f 45%,#1fae55 100%);-webkit-background-clip:text;background-clip:text;color:transparent;padding-right:1px}
+.wordmark svg{width:15px;height:15px;margin:-5px 0 0 1px;transform:rotate(-12deg);stroke:none}
 .pill{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;padding:6px 11px;border-radius:99px;background:rgba(0,0,0,.5);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);color:#fff}
 .pill svg{width:16px;height:16px}
 .hint{position:absolute;left:16px;right:16px;top:calc(50% + min(21vw,124px) + 18px);text-align:center;color:#fff;font-weight:600;font-size:15px;text-shadow:0 1px 6px rgba(0,0,0,.7)}
@@ -170,8 +172,8 @@ dialog{border:0;border-radius:22px;padding:20px;width:min(92vw,420px);background
 dialog::backdrop{background:rgba(0,0,0,.45)}
 dialog h2{font-size:20px;margin-bottom:12px}
 input.code{font-size:26px;letter-spacing:.08em;text-align:center;font-variant-numeric:tabular-nums}
-.toast{position:fixed;left:50%;top:calc(var(--safe-t) + 12px);transform:translate(-50%,-150%);background:var(--text);color:var(--bg);padding:10px 16px;border-radius:14px;font-size:15px;font-weight:600;transition:transform .3s;z-index:30;max-width:90vw;text-align:center}
-.toast.show{transform:translate(-50%,0)}
+.toast{position:fixed;left:50%;top:calc(var(--safe-t) + 12px);transform:translate(-50%,calc(-100% - var(--safe-t) - 40px));opacity:0;visibility:hidden;transition:transform .3s,opacity .3s,visibility 0s .3s;background:var(--text);color:var(--bg);padding:10px 16px;border-radius:14px;font-size:15px;font-weight:600;z-index:30;max-width:90vw;text-align:center}
+.toast.show{transform:translate(-50%,0);opacity:1;visibility:visible;transition:transform .3s,opacity .3s}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
 </style>
 </head>
@@ -184,7 +186,7 @@ input.code{font-size:26px;letter-spacing:.08em;text-align:center;font-variant-nu
       <div class="shade"><div class="frame" id="frame"><span class="laser"></span></div></div>
       <div class="hint" id="hint">Barcode ins Feld halten</div>
       <div class="cam-top">
-        <div class="brand"><img src="data:image/png;base64,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" alt="">VeganToGo</div>
+        <div class="wordmark" role="img" aria-label="VeganToGo"><span class="a">Vegan</span><span class="b">ToGo</span><svg viewBox="0 0 24 24" aria-hidden="true"><defs><linearGradient id="lg" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#1fae55"/><stop offset="1" stop-color="#c9f7b0"/></linearGradient></defs><path fill="url(#lg)" d="M21 2C11 2 4 6.5 4 14c0 2.4.8 4.6 2.1 6.3C7.6 14.6 11.4 10.6 16 8.4c-3.8 2.8-6.7 6.6-7.9 11.9 1.2.5 2.5.7 3.9.7C19 21 22 13 21 2z"/></svg></div>
         <span class="pill" id="netPill"></span>
       </div>
       <div class="cam-tools">
