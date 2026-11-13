@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'unsafe-inline'; style-src 'unsafe-inline'; img-src data: blob: https://images.openfoodfacts.org; connect-src 'self' https://world.openfoodfacts.org; media-src blob: mediastream:; worker-src 'self'; manifest-src 'self'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'unsafe-inline'; style-src 'unsafe-inline'; img-src 'self' data: blob: https://images.openfoodfacts.org; connect-src 'self' https://world.openfoodfacts.org; media-src blob: mediastream:; worker-src 'self'; manifest-src 'self'; base-uri 'none'; form-action 'none'">
 <meta name="referrer" content="no-referrer">
 <meta name="robots" content="noindex, nofollow">
 <meta name="format-detection" content="telephone=no">
@@ -12,7 +12,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="VeganToGo">
 <meta name="theme-color" content="#0b0d0c">
-<link rel="apple-touch-icon" href="data:image/png;base64,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">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="icon" href="data:image/png;base64,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">
 <title>VeganToGo</title>
 <style>
@@ -284,7 +284,7 @@ input.code{font-size:26px;letter-spacing:.08em;text-align:center;font-variant-nu
         <p>Die Daten stammen aus einer freien Community-Datenbank und können unvollständig oder veraltet sein. Bei Allergien oder strenger Ernährung im Zweifel immer die Zutatenliste auf der Packung prüfen.</p>
       </div>
       <button class="btn danger" id="bWipe">Alle App-Daten löschen</button>
-      <p class="src">VeganToGo 1.2 · Barcode: ZXing (Apache-2.0) · Texterkennung: Tesseract.js (Apache-2.0) · Daten & Zutaten-Datenbank: Open Food Facts (ODbL)</p>
+      <p class="src">VeganToGo 1.3 · Barcode: ZXing (Apache-2.0) · Texterkennung: Tesseract.js (Apache-2.0) · Daten & Zutaten-Datenbank: Open Food Facts (ODbL)</p>
     </div>
   </section>
 </main>
@@ -351,7 +351,7 @@ input.code{font-size:26px;letter-spacing:.08em;text-align:center;font-variant-nu
     { k: 'Lamm', re: 'lamm|hammel|' + B + 'lamb' + A + '|mutton', veg: 'no', vegan: 'no' },
     { k: 'Geflügel', re: 'geflügel|huhn|hühner(?!ei)|hähnchen|poulet|' + B + 'puten?|truthahn|' + B + 'ente' + A + '|enten(?:fleisch|fett|brust|leber)|' + B + 'gans' + A + '|gänse|chicken|turkey|' + B + 'duck' + A, veg: 'no', vegan: 'no' },
     { k: 'Wild', re: 'wildfleisch|hirsch|' + B + 'reh' + A + '|rehfleisch|venison', veg: 'no', vegan: 'no' },
-    { k: 'Wurst/Schinken', re: 'schinken|' + B + 'speck|salami|' + B + 'wurst|leberwurst|chorizo|pancetta|prosciutto|bacon|' + B + 'ham' + A, veg: 'no', vegan: 'no' },
+    { k: 'Wurst/Schinken', re: 'schinken|speck|salami|wurst|chorizo|pancetta|prosciutto|bacon|' + B + 'ham' + A, veg: 'no', vegan: 'no' },
     { k: 'Innereien/Blut', re: B + 'leber' + A + '|innereien|knochen|' + B + 'blut' + A + '|blutplasma|' + E('542'), veg: 'no', vegan: 'no' },
     { k: 'Fisch/Meeresfrüchte', re: 'fisch|' + B + 'fish|lachs|salmon|thunfisch|tuna|kabeljau|hering|sardelle|sardine|anchovi|anchov|makrele|forelle|garnele|shrimp|prawn|krabbe|' + B + 'crab|krebs|hummer|lobster|langust|muschel|auster|tintenfisch|kalmar|oktopus|surimi|kaviar|' + B + 'rogen|lebertran', veg: 'no', vegan: 'no' },
     { k: 'Gelatine', re: 'gelatine|gelatin|' + E('441'), veg: 'no', vegan: 'no' },
@@ -416,7 +416,7 @@ input.code{font-size:26px;letter-spacing:.08em;text-align:center;font-variant-nu
     // 1) Ganze Zutaten mit der Open-Food-Facts-Taxonomie abgleichen (eingebettet, offline)
     var TAX = root.VCTax;
     if (TAX) {
-      var segSrc = s.replace(/(\d),(\d)/g, '$1.$2'), SEG = /[^,;()\[\]{}:•·\n]+/g, sm;
+      var segSrc = s.replace(/(\d),(\d)/g, '$1.$2').replace(/\.(?=\s)/g, ','), SEG = /[^,;()\[\]{}:•·\n]+/g, sm;
       while ((sm = SEG.exec(segSrc))) {
         var raw = sm[0], l = 0, r = raw.length;
         while (l < r && /[\s.\-–]/.test(raw[l])) l++;
@@ -560,6 +560,17 @@ function validEAN(code){
   d.reverse().forEach(function(n, i){ sum += n * (i % 2 === 0 ? 3 : 1); });
   return (10 - sum % 10) % 10 === check;
 }
+// UPC-E (8 Ziffern, US-Kleinpackungen) → UPC-A, damit Prüfziffer und Datenbank-Abfrage stimmen
+function upcEtoA(e){
+  if (!/^[01]\d{7}$/.test(e)) return null;
+  var d = e.slice(1, 7), x = d[5], m;
+  if (x <= '2') m = d.slice(0, 2) + x + '0000' + d.slice(2, 5);
+  else if (x === '3') m = d.slice(0, 3) + '00000' + d.slice(3, 5);
+  else if (x === '4') m = d.slice(0, 4) + '00000' + d[4];
+  else m = d.slice(0, 5) + '0000' + x;
+  return e[0] + m + e[7];
+}
+function normCode(c){ c = String(c || '').replace(/\D/g, ''); if (validEAN(c)) return c; var a = upcEtoA(c); return a && validEAN(a) ? a : null; }
 var audioCtx;
 function beep(){
   if (!S.sound) return;
@@ -592,7 +603,10 @@ function show(view){
   if (view !== 'v-scan') stopCamera();
   if (view === 'v-history') renderHistory();
 }
-document.querySelectorAll('nav.tabs button').forEach(function(b){ b.addEventListener('click', function(){ closeSheet(true); show(b.dataset.view); }); });
+document.querySelectorAll('nav.tabs button').forEach(function(b){ b.addEventListener('click', function(){
+  closeSheet(true); show(b.dataset.view);
+  if (b.dataset.view === 'v-scan' && stream && paused) { paused = false; setScanning(true); armIdle(); }
+}); });
 
 function updatePill(){
   var p = $('netPill');
@@ -635,8 +649,15 @@ var video = $('video'), stream = null, track = null, loopOn = false, paused = fa
 var canvas = document.createElement('canvas'), ctx = canvas.getContext('2d', { willReadFrequently: true });
 var frameN = 0, lastCode = null, lastCount = 0, idleTimer = null, zoomSteps = [1];
 
+var starting = false, camGen = 0;
 async function startCamera(){
   if (stream) { paused = false; setScanning(true); armIdle(); return; }
+  if (starting) return;            // Doppeltippen: nur ein Kamerastart
+  starting = true;
+  var gen = ++camGen;
+  try { await startCameraInner(gen); } finally { starting = false; }
+}
+async function startCameraInner(gen){
   $('idleMsg').classList.remove('err');
   if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
     showIdleError('Live-Kamera ist hier nicht verfügbar (die Seite muss über https:// geöffnet werden). Nutze „Foto“ oder „Nummer“.');
@@ -646,11 +667,14 @@ async function startCamera(){
     stream = await navigator.mediaDevices.getUserMedia({ audio: false, video: { facingMode: { ideal: 'environment' }, width: { ideal: 1920 }, height: { ideal: 1080 }, frameRate: { ideal: 30 } } });
   } catch(e) {
     stream = null;
+    if (gen !== camGen) return;
     showIdleError(e && e.name === 'NotAllowedError'
       ? 'Kein Kamerazugriff. Erlaube ihn in Einstellungen › Apps › Safari › Kamera – oder nutze „Foto“ / „Nummer“.'
       : 'Kamera konnte nicht gestartet werden. Nutze „Foto“ oder „Nummer“.');
     return;
   }
+  // Wurde inzwischen abgebrochen (Reiter gewechselt, App verlassen)? Dann Kamera sofort wieder aus.
+  if (gen !== camGen || document.hidden || currentView !== 'v-scan') { stream.getTracks().forEach(function(t){ t.stop(); }); stream = null; return; }
   track = stream.getVideoTracks()[0];
   video.srcObject = stream;
   try { await video.play(); } catch(e){}
@@ -662,6 +686,7 @@ async function startCamera(){
 function showIdleError(msg){ $('idle').hidden = false; var m = $('idleMsg'); m.textContent = msg; m.classList.add('err'); }
 
 function stopCamera(){
+  camGen++;   // laufenden Start abbrechen
   loopOn = false; setScanning(false); clearTimeout(idleTimer);
   if (stream) stream.getTracks().forEach(function(t){ t.stop(); });
   stream = null; track = null; video.srcObject = null;
@@ -720,7 +745,8 @@ async function loop(t){
       ctx.drawImage(video, c.x, c.y, c.w, c.h, 0, 0, outW, outH);
       code = decodeImageData(ctx.getImageData(0, 0, outW, outH), fastReader, (frameN++ % 2) === 1);
     }
-    if (code && validEAN(code)) {
+    code = normCode(code);
+    if (code) {
       // zweimal dieselbe Nummer = sicherer Treffer (Fehllesungen vermeiden)
       if (code === lastCode) lastCount++; else { lastCode = code; lastCount = 1; }
       if (lastCount >= 2 || nativeDetector) { lastCode = null; lastCount = 0; onCode(code); }
@@ -731,6 +757,7 @@ async function loop(t){
 
 function onCode(code){
   paused = true; setScanning(false); clearTimeout(idleTimer);
+  idleTimer = setTimeout(stopCamera, 30000); // Ergebnis offen: Kamera nach 30 s aus
   var f = $('frame'); f.classList.add('hit'); setTimeout(function(){ f.classList.remove('hit'); }, 600);
   haptic(); beep();
   lookupAndShow(code);
@@ -749,8 +776,10 @@ window.addEventListener('pagehide', stopCamera);
 function pickPhoto(){ $('photoIn').value = ''; $('photoIn').click(); }
 $('bPhoto').addEventListener('click', pickPhoto);
 $('bPhoto2').addEventListener('click', function(){ stopCamera(); pickPhoto(); });
+var photoTok = 0;
 $('photoIn').addEventListener('change', async function(){
   var file = this.files && this.files[0]; if (!file) return;
+  var myPhoto = ++photoTok;
   openSheet('<div class="loading"><div class="spin"></div>Barcode wird im Foto gesucht …</div>');
   var url = URL.createObjectURL(file);
   try {
@@ -772,10 +801,13 @@ $('photoIn').addEventListener('change', async function(){
       }
     }
     URL.revokeObjectURL(url);
-    if (code && validEAN(code)) { haptic(); beep(); lookupAndShow(code); }
+    if (myPhoto !== photoTok) return;   // Blatt inzwischen geschlossen
+    code = normCode(code);
+    if (code) { haptic(); beep(); lookupAndShow(code); }
     else renderSheet(msgHtml('Kein Barcode erkannt', 'Fotografiere den Strichcode möglichst gerade, scharf und formatfüllend – oder gib die Nummer unter dem Strichcode ein.', 'unknown'), true);
   } catch(e) {
     URL.revokeObjectURL(url);
+    if (myPhoto !== photoTok) return;
     renderSheet(msgHtml('Foto konnte nicht gelesen werden', 'Bitte erneut versuchen.', 'unknown'), true);
   }
 });
@@ -787,8 +819,8 @@ $('bCode2').addEventListener('click', openCode);
 $('codeCancel').addEventListener('click', function(){ $('codeDlg').close(); });
 $('codeIn').addEventListener('keydown', function(e){ if (e.key === 'Enter') $('codeOk').click(); });
 $('codeOk').addEventListener('click', function(){
-  var c = $('codeIn').value.replace(/\D/g, '');
-  if (!validEAN(c)) { $('codeErr').textContent = 'Ungültige Nummer – bitte alle Ziffern unter dem Strichcode eingeben.'; return; }
+  var c = normCode($('codeIn').value);
+  if (!c) { $('codeErr').textContent = 'Ungültige Nummer – bitte alle Ziffern unter dem Strichcode eingeben.'; return; }
   $('codeDlg').close(); lookupAndShow(c);
 });
 
@@ -807,7 +839,8 @@ function slimProduct(p){
 async function lookupAndShow(code, forceNet){
   var my = ++reqId;
   var cached = getHistory().find(function(h){ return h.code === code && h.p; });
-  if (cached && !forceNet) { renderProduct(cached.p, code, 'cache'); addHistory(code, cached.p); return; }
+  var fresh = cached && (Date.now() - (cached.f || cached.t)) < 30 * 864e5;   // Produktdaten max. 30 Tage alt
+  if (cached && !forceNet && (fresh || S.offline)) { renderProduct(cached.p, code, 'cache'); addHistory(code, cached.p, cached.f || cached.t); return; }
   if (S.offline) {
     renderSheet(msgHtml('Offline-Modus', 'Der Barcode <b>' + esc(code) + '</b> ist nicht im Verlauf. Im Offline-Modus wird nichts gesendet – du kannst die Zutatenliste unter „Zutaten“ selbst prüfen.', 'unknown', true), true);
     return;
@@ -833,6 +866,7 @@ async function lookupAndShow(code, forceNet){
   } catch(e) {
     clearTimeout(to);
     if (my !== reqId) return;
+    if (cached) { renderProduct(cached.p, code, 'cache'); toast('Keine Verbindung – zeige gespeicherte Daten'); return; }
     renderSheet(msgHtml('Keine Verbindung', 'Die Datenbank ist gerade nicht erreichbar. Prüfe deine Internetverbindung oder die Zutaten selbst unter „Zutaten“.', 'unknown', true) +
       '<button class="btn sec mt" id="bRetry">Erneut versuchen</button>', true);
     var b = $('bRetry'); if (b) b.onclick = function(){ lookupAndShow(code, true); };
@@ -933,7 +967,7 @@ function renderSheet(html){
   var o = $('bGoOcr'); if (o) o.onclick = function(){ closeSheet(true); show('v-check'); pickOcr(); };
 }
 function closeSheet(silent){
-  reqId++;
+  reqId++; photoTok++;
   $('sheet').classList.remove('open'); $('backdrop').classList.remove('open');
   if (!silent && stream) { paused = false; setScanning(true); armIdle(); }
 }
@@ -961,7 +995,8 @@ $('bCheck').addEventListener('click', function(){
 $('bClear').addEventListener('click', function(){ $('ingrIn').value = ''; $('checkOut').innerHTML = ''; $('ingrIn').focus(); });
 
 /* ---------------- Texterkennung (Tesseract, lokal) ---------------- */
-var ocrWorker = null, ocrLoading = null;
+var ocrWorker = null, ocrLoading = null, ocrIdle = null;
+function releaseOcrLater(){ clearTimeout(ocrIdle); ocrIdle = setTimeout(function(){ if (ocrWorker) { ocrWorker.terminate(); ocrWorker = null; } }, 120000); }
 function ocrStatus(msg, isErr){ var el = $('ocrStatus'); el.hidden = !msg; el.textContent = msg || ''; el.classList.toggle('warn', !!isErr); }
 function loadScript(src){ return new Promise(function(res, rej){ var s = document.createElement('script'); s.src = src; s.onload = res; s.onerror = rej; document.head.appendChild(s); }); }
 function getOcr(){
@@ -993,8 +1028,10 @@ $('ocrIn').addEventListener('change', async function(){
     var cv = document.createElement('canvas'); cv.width = Math.round(img.naturalWidth * sc); cv.height = Math.round(img.naturalHeight * sc);
     var cx = cv.getContext('2d'); cx.filter = 'grayscale(1) contrast(1.3)'; cx.drawImage(img, 0, 0, cv.width, cv.height);
     URL.revokeObjectURL(url);
+    clearTimeout(ocrIdle);
     var w = await getOcr();
     var r = await w.recognize(cv);
+    releaseOcrLater();
     cv.width = cv.height = 0;
     var t = cleanOcr(r.data.text || '');
     if (t.length < 5) { ocrStatus('Kein Text erkannt. Bitte näher ran, gerade halten und auf gutes Licht achten.', true); return; }
@@ -1015,13 +1052,29 @@ function cleanOcr(t){
 
 /* ---------------- Verlauf ---------------- */
 function getHistory(){ return store.get('history', []); }
-function addHistory(code, p){
+function addHistory(code, p, fetched){
   if (!S.history) return;
   var ev = VCAnalyse.evaluate(p);
   var list = getHistory().filter(function(h){ return h.code !== code; });
-  list.unshift({ code: code, name: p.product_name || 'Unbekanntes Produkt', brand: p.brands || '', v: ev.vegan.status, g: ev.veg.status, t: Date.now(), p: p });
-  store.set('history', list.slice(0, 200));
+  list.unshift({ code: code, name: p.product_name || 'Unbekanntes Produkt', brand: p.brands || '', v: ev.vegan.status, g: ev.veg.status, t: Date.now(), f: fetched || Date.now(), p: p });
+  saveHistory(list.slice(0, 200));
 }
+function saveHistory(list){
+  // Speicher voll? Dann ältere Einträge verwerfen, statt still nichts mehr zu speichern
+  while (true) {
+    try { localStorage.setItem('vc.history', JSON.stringify(list)); return; }
+    catch(e) { if (list.length <= 1) return; list = list.slice(0, Math.floor(list.length * 0.75)); }
+  }
+}
+// Nach einem Update der Zutaten-Datenbank die Bewertungen im Verlauf neu berechnen
+(function(){
+  var ver = (window.VCTaxDate || '') + '|1.3';
+  if (store.get('evalVer', '') === ver) return;
+  var list = getHistory();
+  list.forEach(function(h){ if (h.p) { var ev = VCAnalyse.evaluate(h.p); h.v = ev.vegan.status; h.g = ev.veg.status; } });
+  if (list.length) saveHistory(list);
+  store.set('evalVer', ver);
+})();
 var histFilter = '';
 function fold(x){ return String(x || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/ß/g, 'ss'); }
 function hlQ(text, q){
@@ -1073,7 +1126,7 @@ $('histList').addEventListener('click', function(e){
   var li = e.target.closest('li[data-i]'); if (!li) return;
   var h = getHistory()[+li.dataset.i]; if (h && h.p) renderProduct(h.p, h.code, 'cache');
 });
-$('bHistClear').addEventListener('click', function(){ store.set('history', []); renderHistory(); toast('Verlauf gelöscht'); });
+$('bHistClear').addEventListener('click', function(){ saveHistory([]); renderHistory(); toast('Verlauf gelöscht'); });
 
 /* ---------------- Einstellungen ---------------- */
 document.querySelectorAll('[data-set]').forEach(function(inp){

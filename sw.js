@@ -1,6 +1,6 @@
 /* VeganToGo Service Worker: hält nur die App selbst offline bereit.
    Produktabfragen (Open Food Facts) werden NICHT zwischengespeichert. */
-const CACHE = 'vegantogo-v3';
+const CACHE = 'vegantogo-v4';
 const OCR_CACHE = 'vegantogo-ocr-tess7';   // große Texterkennungs-Dateien, ändern sich nur mit neuer Version
 const APP = ['./', './index.html', './tax-data.js'];
 self.addEventListener('install', e => { e.waitUntil(caches.open(CACHE).then(c => c.addAll(APP)).then(() => self.skipWaiting())); });
@@ -15,8 +15,12 @@ self.addEventListener('fetch', e => {
     e.respondWith(caches.open(OCR_CACHE).then(c => c.match(e.request).then(hit => hit || fetch(e.request).then(r => { if (r.ok) c.put(e.request, r.clone()); return r; }))));
     return;
   }
-  e.respondWith(
-    fetch(e.request).then(r => { if (r.ok) { const c = r.clone(); caches.open(CACHE).then(ca => ca.put(e.request, c)); } return r; })
-      .catch(() => caches.match(e.request).then(r => r || caches.match('./index.html')))
-  );
+  // Netz zuerst (für Updates) – aber bei schlechtem Empfang (Supermarkt!) nach 3 s die gespeicherte Version nehmen
+  e.respondWith((async () => {
+    const net = fetch(e.request).then(r => { if (r.ok) { const c = r.clone(); caches.open(CACHE).then(ca => ca.put(e.request, c)); } return r; });
+    const cached = await caches.match(e.request, { ignoreSearch: e.request.mode === 'navigate' }) || (e.request.mode === 'navigate' ? await caches.match('./index.html') : undefined);
+    if (!cached) return net;
+    const slow = new Promise(res => setTimeout(() => res(cached), 3000));
+    try { return await Promise.race([net, slow]); } catch (err) { return cached; }
+  })());
 });

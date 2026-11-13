@@ -33,7 +33,7 @@
     { k: 'Lamm', re: 'lamm|hammel|' + B + 'lamb' + A + '|mutton', veg: 'no', vegan: 'no' },
     { k: 'Geflügel', re: 'geflügel|huhn|hühner(?!ei)|hähnchen|poulet|' + B + 'puten?|truthahn|' + B + 'ente' + A + '|enten(?:fleisch|fett|brust|leber)|' + B + 'gans' + A + '|gänse|chicken|turkey|' + B + 'duck' + A, veg: 'no', vegan: 'no' },
     { k: 'Wild', re: 'wildfleisch|hirsch|' + B + 'reh' + A + '|rehfleisch|venison', veg: 'no', vegan: 'no' },
-    { k: 'Wurst/Schinken', re: 'schinken|' + B + 'speck|salami|' + B + 'wurst|leberwurst|chorizo|pancetta|prosciutto|bacon|' + B + 'ham' + A, veg: 'no', vegan: 'no' },
+    { k: 'Wurst/Schinken', re: 'schinken|speck|salami|wurst|chorizo|pancetta|prosciutto|bacon|' + B + 'ham' + A, veg: 'no', vegan: 'no' },
     { k: 'Innereien/Blut', re: B + 'leber' + A + '|innereien|knochen|' + B + 'blut' + A + '|blutplasma|' + E('542'), veg: 'no', vegan: 'no' },
     { k: 'Fisch/Meeresfrüchte', re: 'fisch|' + B + 'fish|lachs|salmon|thunfisch|tuna|kabeljau|hering|sardelle|sardine|anchovi|anchov|makrele|forelle|garnele|shrimp|prawn|krabbe|' + B + 'crab|krebs|hummer|lobster|langust|muschel|auster|tintenfisch|kalmar|oktopus|surimi|kaviar|' + B + 'rogen|lebertran', veg: 'no', vegan: 'no' },
     { k: 'Gelatine', re: 'gelatine|gelatin|' + E('441'), veg: 'no', vegan: 'no' },
@@ -98,7 +98,7 @@
     // 1) Ganze Zutaten mit der Open-Food-Facts-Taxonomie abgleichen (eingebettet, offline)
     var TAX = root.VCTax;
     if (TAX) {
-      var segSrc = s.replace(/(\d),(\d)/g, '$1.$2'), SEG = /[^,;()\[\]{}:•·\n]+/g, sm;
+      var segSrc = s.replace(/(\d),(\d)/g, '$1.$2').replace(/\.(?=\s)/g, ','), SEG = /[^,;()\[\]{}:•·\n]+/g, sm;
       while ((sm = SEG.exec(segSrc))) {
         var raw = sm[0], l = 0, r = raw.length;
         while (l < r && /[\s.\-–]/.test(raw[l])) l++;

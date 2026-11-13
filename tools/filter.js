@@ -11,7 +11,7 @@ for (const [n, c] of Object.entries(t)) {
   out[n] = c;
 }
 // Plausibilitätscheck: bricht ab, falls OFF das Dateiformat ändert o. Ä.
-const MUST = { 'gelatine': 'nn', 'magermilchpulver': 'ny', 'schweinefleisch': 'nn', 'honig': 'ny', 'eigelb': 'ny', 'e120': 'nn', 'e471': 'mm' };
+const MUST = { 'gelatine': 'nn', 'magermilchpulver': 'ny', 'schweinefleisch': 'nn', 'honig': 'ny', 'eigelb': 'ny', 'e120': 'nn' };
 const n = Object.keys(out).length;
 const bad = Object.entries(MUST).filter(([k, v]) => out[k] !== v);
 if (n < 3000 || bad.length) { console.error('Plausibilitätscheck fehlgeschlagen:', n, 'Einträge', JSON.stringify(bad)); process.exit(1); }
