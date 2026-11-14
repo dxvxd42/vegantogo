@@ -1,6 +1,6 @@
 /* VeganToGo Service Worker: hält nur die App selbst offline bereit.
    Produktabfragen (Open Food Facts) werden NICHT zwischengespeichert. */
-const CACHE = 'vegantogo-v4';
+const CACHE = 'vegantogo-v5';
 const OCR_CACHE = 'vegantogo-ocr-tess7';   // große Texterkennungs-Dateien, ändern sich nur mit neuer Version
 const APP = ['./', './index.html', './tax-data.js'];
 self.addEventListener('install', e => { e.waitUntil(caches.open(CACHE).then(c => c.addAll(APP)).then(() => self.skipWaiting())); });

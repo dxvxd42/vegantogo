@@ -182,6 +182,19 @@ mark.q{background:color-mix(in srgb,var(--accent) 30%,transparent);color:inherit
 mark{border-radius:5px;padding:0 2px;font-weight:700;background:var(--cb);color:var(--c)}
 .note{font-size:14px;color:var(--muted);padding:12px 14px;border-radius:14px;background:var(--card);border:1px solid var(--line);margin-bottom:12px}
 .note.warn{background:var(--maybe-bg);color:var(--maybe);border-color:transparent}
+.fib{border-radius:18px;padding:14px;background:var(--card);border:1px solid var(--line);margin-bottom:12px}
+.fib .hd{display:flex;align-items:baseline;justify-content:space-between;gap:10px}
+.fib small{font-size:13px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.04em}
+.fib .val{font-size:15px;color:var(--muted);font-variant-numeric:tabular-nums}
+.fib b{display:block;font-size:19px;margin-top:2px;color:var(--fc)}
+.fib .scale{display:grid;grid-template-columns:1fr 1fr 1fr;gap:4px;margin-top:10px}
+.fib .scale span{height:8px;border-radius:99px;background:var(--line)}
+.fib .scale span.on{background:var(--fc)}
+.fib .lbl{display:grid;grid-template-columns:1fr 1fr 1fr;gap:4px;margin-top:5px;font-size:12px;color:var(--muted)}
+.fib .lbl span:nth-child(2){text-align:center} .fib .lbl span:nth-child(3){text-align:right}
+.fib .lbl span.on{color:var(--fc);font-weight:700}
+.fib p{margin:8px 0 0;font-size:13px;color:var(--muted)}
+.f-normal{--fc:var(--unk)} .f-gut{--fc:var(--likely)} .f-hoch{--fc:var(--yes)} .f-none{--fc:var(--unk)}
 .src{font-size:12.5px;color:var(--muted);text-align:center;margin:10px 0 2px}
 .src a{color:inherit}
 .loading{display:flex;flex-direction:column;align-items:center;gap:14px;padding:40px 0;color:var(--muted)}
@@ -284,7 +297,7 @@ input.code{font-size:26px;letter-spacing:.08em;text-align:center;font-variant-nu
         <p>Die Daten stammen aus einer freien Community-Datenbank und können unvollständig oder veraltet sein. Bei Allergien oder strenger Ernährung im Zweifel immer die Zutatenliste auf der Packung prüfen.</p>
       </div>
       <button class="btn danger" id="bWipe">Alle App-Daten löschen</button>
-      <p class="src">VeganToGo 1.3 · Barcode: ZXing (Apache-2.0) · Texterkennung: Tesseract.js (Apache-2.0) · Daten & Zutaten-Datenbank: Open Food Facts (ODbL)</p>
+      <p class="src">VeganToGo 1.4 · Barcode: ZXing (Apache-2.0) · Texterkennung: Tesseract.js (Apache-2.0) · Daten & Zutaten-Datenbank: Open Food Facts (ODbL)</p>
     </div>
   </section>
 </main>
@@ -825,7 +838,7 @@ $('codeOk').addEventListener('click', function(){
 });
 
 /* ---------------- Produktabfrage ---------------- */
-var FIELDS = 'code,product_name,product_name_de,brands,quantity,ingredients_text,ingredients_text_de,ingredients_text_en,ingredients_analysis_tags,labels_tags,traces_tags,ingredients,image_front_small_url';
+var FIELDS = 'code,product_name,product_name_de,brands,quantity,ingredients_text,ingredients_text_de,ingredients_text_en,ingredients_analysis_tags,labels_tags,traces_tags,ingredients,image_front_small_url,nutriments';
 var reqId = 0;
 function slimProduct(p){
   // nur das Nötige behalten (für den lokalen Verlauf)
@@ -833,7 +846,15 @@ function slimProduct(p){
   return { code: p.code, product_name: p.product_name_de || p.product_name, brands: p.brands, quantity: p.quantity,
     ingredients_text_de: p.ingredients_text_de, ingredients_text: p.ingredients_text, ingredients_text_en: p.ingredients_text_en,
     ingredients_analysis_tags: p.ingredients_analysis_tags, labels_tags: p.labels_tags, traces_tags: p.traces_tags,
-    ingredients: slimIngr(p.ingredients), image_front_small_url: p.image_front_small_url };
+    ingredients: slimIngr(p.ingredients), image_front_small_url: p.image_front_small_url, fiber: fiberOf(p) };
+}
+
+function fiberOf(p){
+  // Ballaststoffe in g pro 100 g/ml; null = Open Food Facts hat keinen Wert
+  var n = p.nutriments || {}, v = n.fiber_100g;
+  if (v === '' || v == null) return null;
+  v = +v;
+  return isFinite(v) && v >= 0 && v <= 100 ? v : null;
 }
 
 async function lookupAndShow(code, forceNet){
@@ -907,14 +928,33 @@ function highlight(text, hits){
   return out + esc(text.slice(pos));
 }
 
+/* Ballaststoff-Skala nach EU-Verordnung 1924/2006 (nährwertbezogene Angaben):
+   ab 3 g/100 g „Ballaststoffquelle“, ab 6 g/100 g „hoher Ballaststoffgehalt“ */
+function fiberLevel(g){ return g >= 6 ? 'hoch' : g >= 3 ? 'gut' : 'normal'; }
+var FIB_WORD = { normal: 'Normal', gut: 'Gut', hoch: 'Hoch' };
+function fiberHtml(p, source){
+  var g = p.fiber == null ? p.fiber : Math.round(p.fiber * 10) / 10, none = g == null, idx = none ? -1 : { normal: 0, gut: 1, hoch: 2 }[fiberLevel(g)];
+  var lv = none ? 'none' : fiberLevel(g), names = ['normal', 'gut · ab 3 g', 'hoch · ab 6 g'];
+  var html = '<div class="fib f-' + lv + '"><div class="hd"><small>Ballaststoffe</small>' +
+    (none ? '' : '<span class="val">' + g.toLocaleString('de-DE') + ' g / 100 g</span>') +
+    '</div><b>' + (none ? 'Keine Angabe' : FIB_WORD[lv]) + '</b><div class="scale">';
+  for (var i = 0; i < 3; i++) html += '<span' + (i <= idx ? ' class="on"' : '') + '></span>';
+  html += '</div><div class="lbl">';
+  for (i = 0; i < 3; i++) html += '<span' + (i === idx ? ' class="on"' : '') + '>' + names[i] + '</span>';
+  html += '</div>';
+  if (none) html += '<p>' + (g === undefined && source === 'cache' ? 'Im Verlauf noch nicht gespeichert – tippe unten auf „aktualisieren“.' : 'Für dieses Produkt ist bei Open Food Facts kein Wert eingetragen.') + '</p>';
+  return html + '</div>';
+}
+
 var TRACE_DE = { milk:'Milch', eggs:'Ei', fish:'Fisch', crustaceans:'Krebstiere', molluscs:'Weichtiere', 'gelatin':'Gelatine' };
 
-function analysisHtml(ev, p){
+function analysisHtml(ev, p, source){
   var h = headline(ev), html = '';
   html += '<div class="verdict s-' + h[0] + '"><div class="ic">' + ICON[h[0]] + '</div><div><h3>' + h[1] + '</h3><p>' + h[2] + '</p></div></div>';
   html += '<div class="tiles">' +
     '<div class="tile s-' + ev.vegan.status + '"><small>Vegan</small><b>' + ICON[ev.vegan.status] + WORD[ev.vegan.status] + '</b></div>' +
     '<div class="tile s-' + ev.veg.status + '"><small>Vegetarisch</small><b>' + ICON[ev.veg.status] + WORD[ev.veg.status] + '</b></div></div>';
+  if (p && p.code) html += fiberHtml(p, source);
   ev.notes.forEach(function(n){ html += '<div class="note warn">' + esc(n) + '</div>'; });
 
   var noVeg = ev.veg.no, noVegan = ev.vegan.no.filter(function(x){ return noVeg.map(lc).indexOf(lc(x)) === -1; });
@@ -946,7 +986,7 @@ function renderProduct(p, code, source){
   if (S.images && p.image_front_small_url && /^https:\/\/images\.openfoodfacts\.org\//.test(p.image_front_small_url))
     html += '<img src="' + esc(p.image_front_small_url) + '" alt="" referrerpolicy="no-referrer">';
   html += '<div class="nm"><h2>' + esc(p.product_name || 'Unbekanntes Produkt') + '</h2><span>' + esc([p.brands, p.quantity].filter(Boolean).join(' · ')) + (p.brands || p.quantity ? ' · ' : '') + esc(code) + '</span></div></div>';
-  html += analysisHtml(ev, p);
+  html += analysisHtml(ev, p, source);
   html += '<p class="src">' + (source === 'cache' ? 'Aus deinem Verlauf (ohne Internet) · <a href="#" id="bRefresh">aktualisieren</a>' : 'Daten: Open Food Facts (ohne Gewähr)') +
     ' · <a href="https://world.openfoodfacts.org/product/' + encodeURIComponent(code) + '" target="_blank" rel="noopener noreferrer">Eintrag ansehen/ergänzen</a></p>';
   renderSheet(html, true);
