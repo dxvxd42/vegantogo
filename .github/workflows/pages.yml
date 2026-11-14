@@ -40,7 +40,7 @@ jobs:
       - name: Seite zusammenstellen
         run: |
           mkdir -p _site/ocr
-          cp index.html sw.js tax-data.js apple-touch-icon.png .nojekyll _site/
+          cp index.html sw.js tax-data.js apple-touch-icon.png manifest.webmanifest icon-192.png icon-512.png icon-maskable-512.png .nojekyll _site/
           cp ocr/* _site/ocr/
 
       - uses: actions/configure-pages@983d7736d9b0ae728b81ab479565c72886d7745b # v5.0.0
