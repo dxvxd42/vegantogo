@@ -1,9 +1,10 @@
 # VeganToGo
 
-Barcode-Scanner fürs iPhone: Lebensmittel scannen und sofort sehen, ob sie **vegan** oder **vegetarisch** sind.
+Barcode-Scanner fürs Handy: Lebensmittel scannen und sofort sehen, ob sie **vegan** oder **vegetarisch** sind.
 
 **App öffnen:** https://dxvxd42.github.io/vegantogo/
-Auf dem iPhone in **Safari** öffnen → **Teilen** → **„Zum Home-Bildschirm“**.
+**Android (Chrome):** Seite öffnen → Menü ⋮ → **„App installieren“** bzw. **„Zum Startbildschirm hinzufügen“**.  
+**iPhone (Safari):** **Teilen** → **„Zum Home-Bildschirm“**.
 
 ## Was die App kann
 
